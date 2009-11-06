@@ -10,8 +10,14 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		8096B89B10A420C7002B6821 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B89510A420C7002B6821 /* SCEvent.m */; };
 		8096B89C10A420C7002B6821 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B89810A420C7002B6821 /* SCEvents.m */; };
+		8096B9F010A4632E002B6821 /* NotificationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B9EF10A4632E002B6821 /* NotificationWindow.m */; };
+		8096BA0510A464EE002B6821 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096BA0410A464EE002B6821 /* NotificationView.m */; };
 		80A513D610A2FBE60009BAF4 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 80A513D510A2FBE60009BAF4 /* APPL.icns */; };
 		80A513DB10A2FD650009BAF4 /* TMShredder.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A513DA10A2FD650009BAF4 /* TMShredder.m */; };
+		80F1942410A46B1A00E1E87F /* notification_window_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F1942210A46B1A00E1E87F /* notification_window_bg.png */; };
+		80F1943310A46D7C00E1E87F /* bg.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F1943210A46D7C00E1E87F /* bg.tif */; };
+		80F1951310A47D5800E1E87F /* confirm_btn_down.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F1951110A47D5800E1E87F /* confirm_btn_down.tif */; };
+		80F1951410A47D5800E1E87F /* confirm_btn_up.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F1951210A47D5800E1E87F /* confirm_btn_up.tif */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -32,9 +38,17 @@
 		8096B89710A420C7002B6821 /* SCEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.h; sourceTree = "<group>"; };
 		8096B89810A420C7002B6821 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 		8096B89910A420C7002B6821 /* SCEvents.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.pch; sourceTree = "<group>"; };
+		8096B9EE10A4632E002B6821 /* NotificationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationWindow.h; sourceTree = "<group>"; };
+		8096B9EF10A4632E002B6821 /* NotificationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationWindow.m; sourceTree = "<group>"; };
+		8096BA0310A464EE002B6821 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
+		8096BA0410A464EE002B6821 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
 		80A513D510A2FBE60009BAF4 /* APPL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = APPL.icns; sourceTree = "<group>"; };
 		80A513D910A2FD650009BAF4 /* TMShredder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMShredder.h; sourceTree = "<group>"; };
 		80A513DA10A2FD650009BAF4 /* TMShredder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMShredder.m; sourceTree = "<group>"; };
+		80F1942210A46B1A00E1E87F /* notification_window_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notification_window_bg.png; sourceTree = "<group>"; };
+		80F1943210A46D7C00E1E87F /* bg.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bg.tif; sourceTree = "<group>"; };
+		80F1951110A47D5800E1E87F /* confirm_btn_down.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = confirm_btn_down.tif; sourceTree = "<group>"; };
+		80F1951210A47D5800E1E87F /* confirm_btn_up.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = confirm_btn_up.tif; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* shredder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shredder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -56,6 +70,10 @@
 			children = (
 				80A513D910A2FD650009BAF4 /* TMShredder.h */,
 				80A513DA10A2FD650009BAF4 /* TMShredder.m */,
+				8096B9EE10A4632E002B6821 /* NotificationWindow.h */,
+				8096B9EF10A4632E002B6821 /* NotificationWindow.m */,
+				8096BA0310A464EE002B6821 /* NotificationView.h */,
+				8096BA0410A464EE002B6821 /* NotificationView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -111,6 +129,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				80F1951110A47D5800E1E87F /* confirm_btn_down.tif */,
+				80F1951210A47D5800E1E87F /* confirm_btn_up.tif */,
+				80F1943210A46D7C00E1E87F /* bg.tif */,
+				80F1942210A46B1A00E1E87F /* notification_window_bg.png */,
 				80A513D510A2FBE60009BAF4 /* APPL.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -187,6 +209,10 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				80A513D610A2FBE60009BAF4 /* APPL.icns in Resources */,
+				80F1942410A46B1A00E1E87F /* notification_window_bg.png in Resources */,
+				80F1943310A46D7C00E1E87F /* bg.tif in Resources */,
+				80F1951310A47D5800E1E87F /* confirm_btn_down.tif in Resources */,
+				80F1951410A47D5800E1E87F /* confirm_btn_up.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +227,8 @@
 				80A513DB10A2FD650009BAF4 /* TMShredder.m in Sources */,
 				8096B89B10A420C7002B6821 /* SCEvent.m in Sources */,
 				8096B89C10A420C7002B6821 /* SCEvents.m in Sources */,
+				8096B9F010A4632E002B6821 /* NotificationWindow.m in Sources */,
+				8096BA0510A464EE002B6821 /* NotificationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
