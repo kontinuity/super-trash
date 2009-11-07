@@ -1,9 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface NotificationView : NSView {
-  NSImage *bgImage;
+  IBOutlet NSButton *deleteAll;
 }
-
-@property (retain) NSImage *bgImage;
 
 @end

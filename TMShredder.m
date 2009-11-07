@@ -25,7 +25,8 @@
 - (void) setNotificationWindowPosition {
   NSSize screenSize = [[NSScreen mainScreen] visibleFrame].size;
   NSLog(@"mainScreen frame = %@", NSStringFromSize(screenSize));
-  [notificationWindow setFrameTopLeftPoint:NSMakePoint(screenSize.width - 315, MAX(screenSize.height / 4, 150))];
+  [notificationWindow setFrame:NSMakeRect(0, 0, 265, 200) display: YES];
+  [notificationWindow setFrameTopLeftPoint:NSMakePoint(screenSize.width - 315, MAX(screenSize.height / 3, 350))];
   NSLog(@"Window frame = %@", NSStringFromRect([notificationWindow frame]));
 }
 
@@ -77,7 +78,7 @@
   [notificationWindow setLevel:NSFloatingWindowLevel];
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:1.0];
-  self.notifyWindowTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(hideNotification) userInfo:NULL repeats:NO];
+  //self.notifyWindowTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(hideNotification) userInfo:NULL repeats:NO];
 }
 
 - (void) hideNotification {

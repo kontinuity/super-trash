@@ -2,28 +2,22 @@
 
 @implementation NotificationView
 
-@synthesize bgImage;
-
-/*
- This routine is called at app launch time when this class is unpacked from the nib.
- */
-- (void)awakeFromNib {
-  // Load the images from the bundle's Resources directory
-  self.bgImage = [NSImage imageNamed:@"bg"];
-}
-
-- (void)dealloc {
-  [self.bgImage release];
-  [super dealloc];
-}
-
 - (void)drawRect:(NSRect)rect {
   [[NSColor clearColor] set];
   NSRectFill([self frame]);
-  [self.bgImage compositeToPoint:NSZeroPoint operation:NSCompositeSourceOver];
   
+  [deleteAll setFrameOrigin:NSMakePoint(78, 15)];
+  
+  [self setFrame:NSMakeRect(0, 0, 265, )];
+  NSDrawThreePartImage([self frame],
+                       [NSImage imageNamed:@"window_top"], 
+                       [NSImage imageNamed:@"window_center"], 
+                       [NSImage imageNamed:@"window_bottom"], 
+                       YES, NSCompositeSourceOver, 1.0, NO);
+    
   [[self window] setHasShadow:NO];
   [[self window] setHasShadow:YES];
+  
 }
 
 @end
