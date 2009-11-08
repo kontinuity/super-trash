@@ -25,6 +25,7 @@
 		80F196A510A60BED00E1E87F /* delete_all_up.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F196A310A60BED00E1E87F /* delete_all_up.tif */; };
 		80F196AC10A60FE000E1E87F /* delete_down.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F196AA10A60FE000E1E87F /* delete_down.tif */; };
 		80F196AD10A60FE000E1E87F /* delete_up.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F196AB10A60FE000E1E87F /* delete_up.tif */; };
+		80F19AB210A751A100E1E87F /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F19AB110A751A100E1E87F /* cross.png */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -63,6 +64,8 @@
 		80F196A310A60BED00E1E87F /* delete_all_up.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = delete_all_up.tif; sourceTree = "<group>"; };
 		80F196AA10A60FE000E1E87F /* delete_down.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = delete_down.tif; sourceTree = "<group>"; };
 		80F196AB10A60FE000E1E87F /* delete_up.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = delete_up.tif; sourceTree = "<group>"; };
+		80F1972610A6197A00E1E87F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		80F19AB110A751A100E1E87F /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* shredder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shredder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -88,6 +91,7 @@
 				8096B9EF10A4632E002B6821 /* NotificationWindow.m */,
 				8096BA0310A464EE002B6821 /* NotificationView.h */,
 				8096BA0410A464EE002B6821 /* NotificationView.m */,
+				80F1972610A6197A00E1E87F /* Constants.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -143,6 +147,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				80F19AB110A751A100E1E87F /* cross.png */,
 				80F196AA10A60FE000E1E87F /* delete_down.tif */,
 				80F196AB10A60FE000E1E87F /* delete_up.tif */,
 				80F196A210A60BED00E1E87F /* delete_all_down.tif */,
@@ -241,6 +246,7 @@
 				80F196A510A60BED00E1E87F /* delete_all_up.tif in Resources */,
 				80F196AC10A60FE000E1E87F /* delete_down.tif in Resources */,
 				80F196AD10A60FE000E1E87F /* delete_up.tif in Resources */,
+				80F19AB210A751A100E1E87F /* cross.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
