@@ -12,7 +12,7 @@
   NSMutableArray *notifiedTrashedFiles;
   
   NSPoint notificationWindowLocation;
-  NSTimer *notifyWindowTimer;
+  NSTimer *timer;
   
   NSMutableArray *rows;
     
@@ -20,13 +20,15 @@
   IBOutlet NotificationView *notificationView;
   IBOutlet NSButton *deleteAll;
   IBOutlet NSButton *close;
+  IBOutlet NSTextField *others;
+  IBOutlet NSTextField *counter;
 }
 
 @property (retain) NSString *trashDirectory;
 @property (retain) NSArray *trashContents;
 @property (assign) NSPoint notificationWindowLocation;
 @property (retain) NSMutableArray *notifiedTrashedFiles;
-@property (retain) NSTimer *notifyWindowTimer;
+@property (retain) NSTimer *timer;
 @property (retain) NSMutableArray *rows;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification;
@@ -49,5 +51,8 @@
 - (IBAction) close: (id) sender;
 - (IBAction) show: (id) sender;
 - (IBAction) removeAll: (id) sender;
+- (void) setOthersTitle: (NSString *) title;
+- (void) setCounterTitle: (NSString *) title;
+- (NSColor *) colorFromHexRGB:(NSString *) inColorString;
 
 @end

@@ -8,7 +8,7 @@
 
 @implementation TMShredder
 
-@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, notifyWindowTimer, rows;
+@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, timer, rows;
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
 
@@ -60,7 +60,6 @@
 - (NSPoint) windowLocationFrom: (NSSize) size {
   
   NSSize screenSize = [[NSScreen mainScreen] visibleFrame].size;
-  NSLog(@"Screen resolutions detected as %@", NSStringFromSize(screenSize));
     
   /* 
    * Default Location is bottom right of screen cause its closest to the 
@@ -75,9 +74,6 @@
 
 - (void) setWindowSize: (NSSize) to {
   NSPoint toPoint = [self windowLocationFrom:to];
-  
-  NSLog(@"Calculated window location %@ from size %@", NSStringFromPoint(toPoint), NSStringFromSize(to));
-  
   [notificationWindow setFrame: NSMakeRect(toPoint.x, toPoint.y, to.width, to.height) display:YES];
   [notificationView setFrame: NSMakeRect(0, 0, to.width, to.height)];
 }
@@ -88,6 +84,8 @@
 
 - (void) showNotification:(NSArray *) trashedFiles {
   
+  [timer invalidate];
+  
   [self hideAllRows];
   
   if ([trashedFiles count] == 0) {
@@ -95,25 +93,43 @@
     return;
   }
   
+  int rowsToDisplay = MIN(MAX_ROWS, [trashedFiles count]);
+  
   //42 + (rows * (66 + 4)) - DELETE ALL + (rows * (ROW HEIGHT + PAD))
   
-  int rowsToDisplay = [trashedFiles count] > 5 ? 5 : [trashedFiles count];
-  [self setWindowSize:NSMakeSize(WINDOW_DEFAULT_WIDTH, 42 + (rowsToDisplay * (30 + 4)))];
+  [self setWindowSize:NSMakeSize(WINDOW_DEFAULT_WIDTH, 60 + (rowsToDisplay * (30 + 4)))];
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
-  [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];
-  
+  [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];  
+  [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
+  [counter setFrameOrigin:NSMakePoint(10, -20)];
+    
   for (int index = 0; index < rowsToDisplay; index++) {
     [self update: [self.rows objectAtIndex:index] with:[trashedFiles objectAtIndex:index]];
+  }
+  
+  [others setHidden:YES];
+  if ([trashedFiles count] > MAX_ROWS) {
+    int displayCount = [trashedFiles count] - MAX_ROWS;
+    NSString *title = [NSString stringWithFormat:@"and %i others", displayCount];
+    [self setOthersTitle: title];
+    [others setHidden:NO];
   }
     
   self.notifiedTrashedFiles = [[NSMutableArray alloc] initWithArray: trashedFiles];
   
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:1.0];
+  timer = [NSTimer scheduledTimerWithTimeInterval: 50
+                                           target: self
+                                         selector: @selector(hideNotification)
+                                         userInfo: nil
+                                          repeats: NO];
+  [self setCounterTitle:@"5"];
+
 }
 
 - (void) hideNotification {
-  
+  [timer invalidate];
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:0.0];  
   
@@ -140,7 +156,7 @@
 
 - (NotificationRowView *) drawRowAt: (int) index with: (NSString *) file andHidden: (BOOL) hide  {
   
-  int rowY = 50 + index * 24;
+  int rowY = 60 + index * 24;
   
   NotificationRowView *row = [[[NotificationRowView alloc] initWithFrame: NSMakeRect(0, 0, 0, 0)] autorelease];
   
@@ -248,6 +264,43 @@
   [self hideNotification];
 }
 
+- (void) setOthersTitle: (NSString *) title {
+  NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSColor whiteColor], NSForegroundColorAttributeName,
+                            [NSFont fontWithName:@"Futura-Normal" size:12], NSFontAttributeName,
+                            nil] autorelease];
+  
+  [others setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];  
+}
 
+- (void) setCounterTitle: (NSString *) title {
+  NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys:
+                            [self colorFromHexRGB:@"0x747474"], NSForegroundColorAttributeName,
+                            [NSFont fontWithName:@"Helvetica Bold" size:48], NSFontAttributeName,
+                            nil] autorelease];
+  
+  [counter setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];
+}
+
+- (NSColor *) colorFromHexRGB:(NSString *) inColorString {
+  NSColor *result = nil;
+  unsigned int colorCode = 0;
+  unsigned char redByte, greenByte, blueByte;
+  
+  if (nil != inColorString) {
+    NSScanner *scanner = [NSScanner scannerWithString:inColorString];
+    (void) [scanner scanHexInt:&colorCode];	// ignore error
+  }
+  
+  redByte		= (unsigned char) (colorCode >> 16);
+  greenByte	= (unsigned char) (colorCode >> 8);
+  blueByte	= (unsigned char) (colorCode);	// masks off high bits
+  result = [NSColor
+            colorWithCalibratedRed:		(float)redByte	/ 0xff
+            green:	(float)greenByte/ 0xff
+            blue:	(float)blueByte	/ 0xff
+            alpha:1.0];
+  return result;
+}
 
 @end
