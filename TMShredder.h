@@ -22,6 +22,8 @@
   IBOutlet NSButton *close;
   IBOutlet NSTextField *others;
   IBOutlet NSTextField *counter;
+  
+  int seconds;
 }
 
 @property (retain) NSString *trashDirectory;
@@ -30,10 +32,12 @@
 @property (retain) NSMutableArray *notifiedTrashedFiles;
 @property (retain) NSTimer *timer;
 @property (retain) NSMutableArray *rows;
+@property (assign) int seconds;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification;
 - (void) registerEvents;
 - (void) scanTrash;
+- (void) startTicker;
 - (void) initializePaths;
 - (void) initializeWindow;
 - (void) initializeRows;

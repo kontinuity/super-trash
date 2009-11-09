@@ -8,10 +8,14 @@
 
 @implementation TMShredder
 
-@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, timer, rows;
+@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, timer, rows, seconds;
+
+- (void) registerDefaults {
+  [[NSUserDefaults standardUserDefaults] setInteger:5 forKey:@"windowDisplayDuration"];
+}
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
-
+  [self registerDefaults];
   [self initializePaths];
   [self initializeWindow];
   [self initializeRows];
@@ -21,6 +25,19 @@
   [self showNotification: [NSArray arrayWithObjects: @"bse.py", @"Lorem", @"ipsum", @"dolor", @"sit", @"amet", @"consectetur", @"adipisicing", @"elit", nil]];
   
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
+}
+
+- (void) startTicker {
+  self.seconds = 0;
+  timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
+                                           target: self
+                                         selector: @selector(handleTick:)
+                                         userInfo: nil
+                                          repeats: YES];  
+}
+
+- (void) stopTicker {
+  [timer invalidate];
 }
 
 - (void) scanTrash {
@@ -101,7 +118,7 @@
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
   [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];  
   [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
-  [counter setFrameOrigin:NSMakePoint(10, -20)];
+  [counter setFrameOrigin:NSMakePoint(10, -10)];
     
   for (int index = 0; index < rowsToDisplay; index++) {
     [self update: [self.rows objectAtIndex:index] with:[trashedFiles objectAtIndex:index]];
@@ -119,13 +136,18 @@
   
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:1.0];
-  timer = [NSTimer scheduledTimerWithTimeInterval: 50
-                                           target: self
-                                         selector: @selector(hideNotification)
-                                         userInfo: nil
-                                          repeats: NO];
-  [self setCounterTitle:@"5"];
+  [self startTicker];
+}
 
+- (void) handleTick: (id) sender {
+  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: @"windowDisplayDuration"];
+  if (self.seconds >= duration) {
+    [self hideNotification];
+  } else {
+    [self setCounterTitle:[NSString stringWithFormat:@"%i", duration - self.seconds]];
+    self.seconds++;
+  }
+  
 }
 
 - (void) hideNotification {
@@ -274,9 +296,14 @@
 }
 
 - (void) setCounterTitle: (NSString *) title {
+  
+  NSShadow *sh = [[NSShadow alloc] init];
+  [sh setShadowOffset:NSMakeSize(0,-1)];
+  [sh setShadowColor:[NSColor blackColor]];
+  [sh setShadowBlurRadius:3];  
   NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys:
                             [self colorFromHexRGB:@"0x747474"], NSForegroundColorAttributeName,
-                            [NSFont fontWithName:@"Helvetica Bold" size:48], NSFontAttributeName,
+                            [NSFont fontWithName:@"Helvetica Bold" size:56], NSFontAttributeName,                            
                             nil] autorelease];
   
   [counter setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];
@@ -299,7 +326,7 @@
             colorWithCalibratedRed:		(float)redByte	/ 0xff
             green:	(float)greenByte/ 0xff
             blue:	(float)blueByte	/ 0xff
-            alpha:1.0];
+            alpha:0.3];
   return result;
 }
 
