@@ -10,3 +10,6 @@ int const WINDOW_RIGHT_PAD = 20;
 
 extern int const WINDOW_BOTTOM_PAD;
 int const WINDOW_BOTTOM_PAD = 20;
+
+extern int const MAX_ROWS;
+int const MAX_ROWS = 5;

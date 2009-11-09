@@ -3,15 +3,18 @@
 
 @class NotificationWindow;
 @class NotificationView;
+@class NotificationRowView;
 
 @interface TMShredder : NSObject <SCEventListenerProtocol> {
   
   NSString *trashDirectory;
-  NSMutableArray *trashContents;
-  NSString *notifiedTrashedFile;  
-
+  NSArray *trashContents;
+  NSMutableArray *notifiedTrashedFiles;
+  
   NSPoint notificationWindowLocation;
   NSTimer *notifyWindowTimer;
+  
+  NSMutableArray *rows;
     
   IBOutlet NotificationWindow *notificationWindow;
   IBOutlet NotificationView *notificationView;
@@ -20,24 +23,31 @@
 }
 
 @property (retain) NSString *trashDirectory;
-@property (retain) NSMutableArray *trashContents;
+@property (retain) NSArray *trashContents;
 @property (assign) NSPoint notificationWindowLocation;
-@property (retain) NSString *notifiedTrashedFile;
+@property (retain) NSMutableArray *notifiedTrashedFiles;
 @property (retain) NSTimer *notifyWindowTimer;
+@property (retain) NSMutableArray *rows;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification;
 - (void) registerEvents;
 - (void) scanTrash;
 - (void) initializePaths;
 - (void) initializeWindow;
+- (void) initializeRows;
 - (void) setWindowSize: (NSSize) to;
 - (void) setDefaultWindowSizeAndPosition;
 - (NSArray *) trashSnapshot;
 - (void) showNotification:(NSArray *) trashedFiles;
-- (void) drawRowAt: (int) index with: (NSString *) file;
+- (void) hideNotification;
+- (NotificationRowView *) drawRowAt: (int) index with: (NSString *) file andHidden: (BOOL) hide;
+- (void) update: (NotificationRowView *) row with: (NSString *) file;
+- (void) hideAllRows;
 - (NSTextField *) createLabelWith: (NSString *) display;
 - (NSButton *) createButtonWith: (NSString *) title;
 - (NSImageView *) createImageViewWith: (NSString *) file;
 - (IBAction) close: (id) sender;
+- (IBAction) show: (id) sender;
+- (IBAction) removeAll: (id) sender;
 
 @end
