@@ -326,7 +326,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>80F19DF910A8B5BF00E1E87F</string>
+										<string>80F19E5110A8C4DA00E1E87F</string>
 										<key>history</key>
 										<array>
 											<string>80A5140E10A3014E0009BAF4</string>
@@ -338,13 +338,13 @@
 											<string>80F196BD10A6181900E1E87F</string>
 											<string>80F196BE10A6181900E1E87F</string>
 											<string>80F199F910A70F7500E1E87F</string>
-											<string>80F19B0C10A81A1D00E1E87F</string>
 											<string>80F19B0D10A81A1D00E1E87F</string>
-											<string>80F19B7C10A82F9900E1E87F</string>
 											<string>80F19B9810A8341800E1E87F</string>
 											<string>80F19B9910A8341800E1E87F</string>
 											<string>80F19DC210A8B3F500E1E87F</string>
-											<string>80F19DC310A8B3F500E1E87F</string>
+											<string>80F19E3710A8BE7200E1E87F</string>
+											<string>80F19E4C10A8C42A00E1E87F</string>
+											<string>80F19E2410A8BCC500E1E87F</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -522,6 +522,12 @@
 											<string>80F19DB510A8B37E00E1E87F</string>
 											<string>80F19DC410A8B3F500E1E87F</string>
 											<string>80F19DC510A8B3F500E1E87F</string>
+											<string>80F19E2510A8BCC500E1E87F</string>
+											<string>80F19E3910A8BE7200E1E87F</string>
+											<string>80F19E3A10A8BE7200E1E87F</string>
+											<string>80F19E3B10A8BE7200E1E87F</string>
+											<string>80F19E3C10A8BE7200E1E87F</string>
+											<string>80F19E4D10A8C42A00E1E87F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -725,9 +731,9 @@
 	<array>
 		<string>80F1970710A6181900E1E87F</string>
 		<string>80F1970810A6181900E1E87F</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>8026A6B810A2BDFD0039BFC7</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/arif/work/shredder/shredder.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -1110,7 +1116,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

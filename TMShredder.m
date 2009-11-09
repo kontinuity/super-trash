@@ -21,8 +21,11 @@
   [self initializeRows];
   [self scanTrash];
   [self registerEvents];
-
-  [self showNotification: [NSArray arrayWithObjects: @"bse.py", @"Lorem", @"ipsum", @"dolor", @"sit", @"amet", @"consectetur", @"adipisicing", @"elit", nil]];
+  
+  /*
+  [self showNotification: [NSArray arrayWithObjects: @"bse.py", @"Lorem big text", @"ipsum jumped", @"dolor over the", 
+                           @"sit rainbow while", @"amet drinking a glass", @"consectetur of whisky on", @"adipisicing the rocks", @"elit and got drunk", nil]];
+  */
   
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
 }
@@ -118,7 +121,7 @@
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
   [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];  
   [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
-  [counter setFrameOrigin:NSMakePoint(10, -10)];
+  [counter setFrameOrigin:NSMakePoint(110, 70)];
     
   for (int index = 0; index < rowsToDisplay; index++) {
     [self update: [self.rows objectAtIndex:index] with:[trashedFiles objectAtIndex:index]];
@@ -260,7 +263,7 @@
   self.trashContents = [NSArray arrayWithArray:trashState];
   
   if ([trashedFiles count]) {
-    [self showNotification:[trashedFiles objectAtIndex:0]];
+    [self showNotification:trashedFiles];
   }
 }
 
@@ -303,7 +306,7 @@
   [sh setShadowBlurRadius:3];  
   NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys:
                             [self colorFromHexRGB:@"0x747474"], NSForegroundColorAttributeName,
-                            [NSFont fontWithName:@"Helvetica Bold" size:56], NSFontAttributeName,                            
+                            [NSFont fontWithName:@"Helvetica Bold" size:108], NSFontAttributeName,                            
                             nil] autorelease];
   
   [counter setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];
