@@ -8,7 +8,7 @@
 
 @implementation TMShredder
 
-@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, timer, rows;
+@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, rows;
 
 - (void) registerDefaults {
   [[NSUserDefaults standardUserDefaults] setInteger:5 forKey:@"windowDisplayDuration"];
@@ -21,7 +21,7 @@
   [self initializeRows];
   [self scanTrash];
   [self registerEvents];
-  [self startTimerInBackgroundThread];
+  [self startTimer];
   
   [self showNotification: [NSArray arrayWithObjects: @"bse.py", @"Lorem big text", @"ipsum jumped", @"dolor over the", 
                            @"sit rainbow while", @"amet drinking a glass", @"consectetur of whisky on", @"adipisicing the rocks", @"elit and got drunk", nil]];
@@ -29,12 +29,11 @@
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
 }
 
-- (void) startTimerInBackgroundThread {
-  [self performSelectorInBackground:@selector(startTimer) withObject:NULL];
+- (void) startTimer {
+  [self performSelectorInBackground:@selector(startTimerInBackgroundThread) withObject:NULL];
 }
   
-- (void) startTimer {
-  NSLog(@"About to start timer");
+- (void) startTimerInBackgroundThread {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSTimer *localTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFiredInBackgroundThread) userInfo:NULL repeats:YES];
   [[NSRunLoop currentRunLoop] addTimer:[localTimer retain] forMode:NSDefaultRunLoopMode];
@@ -159,7 +158,6 @@
 }
 
 - (void) hideNotification {
-  [timer invalidate];
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:0.0];  
   

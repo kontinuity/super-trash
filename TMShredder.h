@@ -12,7 +12,6 @@
   NSMutableArray *notifiedTrashedFiles;
   
   NSPoint notificationWindowLocation;
-  NSTimer *timer;
   
   NSMutableArray *rows;
     
@@ -31,7 +30,6 @@
 @property (retain) NSArray *trashContents;
 @property (assign) NSPoint notificationWindowLocation;
 @property (retain) NSMutableArray *notifiedTrashedFiles;
-@property (retain) NSTimer *timer;
 @property (retain) NSMutableArray *rows;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification;
