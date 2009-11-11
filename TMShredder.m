@@ -56,8 +56,7 @@
   if (secondsSinceWindowOpen >= duration) {
     [self hideNotification];
   } else {
-
-    [self setCounterTitle:[NSString stringWithFormat:@"%i", duration - secondsSinceWindowOpen]];
+    [self updateCounter];
     secondsSinceWindowOpen++;
   }  
 }
@@ -133,12 +132,11 @@
   int rowsToDisplay = MIN(MAX_ROWS, [trashedFiles count]);
   
   //42 + (rows * (66 + 4)) - DELETE ALL + (rows * (ROW HEIGHT + PAD))
-  
-  [self setWindowSize:NSMakeSize(WINDOW_DEFAULT_WIDTH, 60 + (rowsToDisplay * (30 + 4)))];
+  NSSize calculatedWindowSize = NSMakeSize(WINDOW_DEFAULT_WIDTH, 60 + (rowsToDisplay * (30 + 4)));
+  [self setWindowSize: calculatedWindowSize];
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
   [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];  
   [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
-  [counter setFrameOrigin:NSMakePoint(110, 70)];
     
   for (int index = 0; index < rowsToDisplay; index++) {
     [self update: [self.rows objectAtIndex:index] with:[trashedFiles objectAtIndex:index]];
@@ -157,6 +155,7 @@
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:1.0];
   secondsSinceWindowOpen = 0;
+  [self updateCounter];
 }
 
 - (void) hideNotification {
@@ -177,7 +176,6 @@
   
   NSString *title = file;
   if ([file length] > LABEL_MAX_LENGTH) {
-    NSLog(@"Shortening %@", file);
     NSMutableString *str = [NSMutableString stringWithString:file];
     [str replaceCharactersInRange: NSMakeRange(LABEL_MAX_LENGTH - 3, [str length] - LABEL_MAX_LENGTH) 
                         withString: @"..."];
@@ -263,19 +261,13 @@
 - (void) pathWatcher:(SCEvents *)pathWatcher eventOccurred: (SCEvent *)event {
   NSArray *trashState = [self trashSnapshot];
   
-  NSLog(@"Current state of directory: %@", trashState);
-  
-  BOOL changed = [self.trashContents isEqualToArray: trashState];
-  NSLog(@"%@", (changed ? @"YES" : @"NO"));
-  
   NSMutableArray *trashedFiles = [NSMutableArray array];
   for (NSString *file in trashState) {
     if ([self.trashContents indexOfObject:file] == NSNotFound) {
-      NSLog(@"New trashed file found: %@", file);
       [trashedFiles addObject:file];
     }
   }
-  NSLog(@"Found total %d files", [trashedFiles count]);
+  NSLog(@"Found total %d changed files", [trashedFiles count]);
   self.trashContents = [NSArray arrayWithArray:trashState];
   
   if ([trashedFiles count]) {
@@ -314,18 +306,26 @@
   [others setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];  
 }
 
-- (void) setCounterTitle: (NSString *) title {
+- (void) updateCounter {
   
-  NSShadow *sh = [[NSShadow alloc] init];
-  [sh setShadowOffset:NSMakeSize(0,-1)];
-  [sh setShadowColor:[NSColor blackColor]];
-  [sh setShadowBlurRadius:3];  
+  int filesShown = [self displayedFilesCount];
+  int fontSize = (108 * filesShown) / MAX_ROWS;
+
   NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys:
                             [self colorFromHexRGB:@"0x747474"], NSForegroundColorAttributeName,
-                            [NSFont fontWithName:@"Helvetica Bold" size:108], NSFontAttributeName,                            
+                            [NSFont fontWithName:@"Helvetica Bold" size:fontSize], NSFontAttributeName,
                             nil] autorelease];
   
-  [counter setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];
+  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: @"windowDisplayDuration"];
+  [counter setAttributedStringValue: [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%i", duration - secondsSinceWindowOpen] attributes: attribs] autorelease]];
+  
+  NSRect deleteAllFrame = [deleteAll frame];
+  [counter sizeToFit];
+  [counter setFrameOrigin:NSMakePoint(110, deleteAllFrame.origin.y + deleteAllFrame.size.height + 5)];
+}
+
+- (int) displayedFilesCount {
+  return MIN([notifiedTrashedFiles count], MAX_ROWS);
 }
 
 - (NSColor *) colorFromHexRGB:(NSString *) inColorString {

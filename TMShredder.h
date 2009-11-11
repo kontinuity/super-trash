@@ -58,11 +58,12 @@
 - (IBAction) show: (id) sender;
 - (IBAction) removeAll: (id) sender;
 - (void) setOthersTitle: (NSString *) title;
-- (void) setCounterTitle: (NSString *) title;
+- (void) updateCounter;
 - (NSColor *) colorFromHexRGB:(NSString *) inColorString;
 - (void) mouseEntered:(NSEvent *)theEvent;
 - (void) mouseExited:(NSEvent *)theEvent;
 - (void) holdWindow;
 - (void) releaseWindow;
+- (int) displayedFilesCount;
 
 @end
