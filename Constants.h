@@ -13,3 +13,6 @@ int const WINDOW_BOTTOM_PAD = 20;
 
 extern int const MAX_ROWS;
 int const MAX_ROWS = 5;
+
+extern int const LABEL_MAX_LENGTH;
+int const LABEL_MAX_LENGTH = 25;

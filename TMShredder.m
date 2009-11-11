@@ -8,39 +8,58 @@
 
 @implementation TMShredder
 
-@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, timer, rows, seconds;
+@synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, timer, rows;
 
 - (void) registerDefaults {
   [[NSUserDefaults standardUserDefaults] setInteger:5 forKey:@"windowDisplayDuration"];
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
-  [self registerDefaults];
+  [self registerDefaults];  
   [self initializePaths];
   [self initializeWindow];
   [self initializeRows];
   [self scanTrash];
   [self registerEvents];
+  [self startTimerInBackgroundThread];
   
-  /*
   [self showNotification: [NSArray arrayWithObjects: @"bse.py", @"Lorem big text", @"ipsum jumped", @"dolor over the", 
                            @"sit rainbow while", @"amet drinking a glass", @"consectetur of whisky on", @"adipisicing the rocks", @"elit and got drunk", nil]];
-  */
   
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
 }
 
-- (void) startTicker {
-  self.seconds = 0;
-  timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
-                                           target: self
-                                         selector: @selector(handleTick:)
-                                         userInfo: nil
-                                          repeats: YES];  
+- (void) startTimerInBackgroundThread {
+  [self performSelectorInBackground:@selector(startTimer) withObject:NULL];
+}
+  
+- (void) startTimer {
+  NSLog(@"About to start timer");
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSTimer *localTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFiredInBackgroundThread) userInfo:NULL repeats:YES];
+  [[NSRunLoop currentRunLoop] addTimer:[localTimer retain] forMode:NSDefaultRunLoopMode];
+  [self timerFiredInBackgroundThread];
+  [[NSRunLoop currentRunLoop] run];
+  [pool release];
+}
+  
+- (void) timerFiredInBackgroundThread {
+  [self performSelectorOnMainThread:@selector(timerFired) withObject:self waitUntilDone:NO];
 }
 
-- (void) stopTicker {
-  [timer invalidate];
+- (void) timerFired {
+  
+  if (holdingWindow)
+    return;
+  
+  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: @"windowDisplayDuration"];
+  if (secondsSinceWindowOpen >= duration) {
+    [self hideNotification];
+  } else {
+
+    [self setCounterTitle:[NSString stringWithFormat:@"%i", duration - secondsSinceWindowOpen]];
+    secondsSinceWindowOpen++;
+  }  
 }
 
 - (void) scanTrash {
@@ -71,7 +90,7 @@
   self.rows = [[NSMutableArray alloc] initWithCapacity:MAX_ROWS];
   
   for (int index = 0; index < MAX_ROWS; index++) {
-    NotificationRowView *row = [self drawRowAt:index with:@"" andHidden:YES];    
+    NotificationRowView *row = [self drawRowAt:index with:@"" andHidden:YES];
     [self.rows insertObject:row atIndex:index];
   }
   
@@ -104,8 +123,6 @@
 
 - (void) showNotification:(NSArray *) trashedFiles {
   
-  [timer invalidate];
-  
   [self hideAllRows];
   
   if ([trashedFiles count] == 0) {
@@ -133,24 +150,13 @@
     NSString *title = [NSString stringWithFormat:@"and %i others", displayCount];
     [self setOthersTitle: title];
     [others setHidden:NO];
-  }
+  }  
     
   self.notifiedTrashedFiles = [[NSMutableArray alloc] initWithArray: trashedFiles];
   
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:1.0];
-  [self startTicker];
-}
-
-- (void) handleTick: (id) sender {
-  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: @"windowDisplayDuration"];
-  if (self.seconds >= duration) {
-    [self hideNotification];
-  } else {
-    [self setCounterTitle:[NSString stringWithFormat:@"%i", duration - self.seconds]];
-    self.seconds++;
-  }
-  
+  secondsSinceWindowOpen = 0;
 }
 
 - (void) hideNotification {
@@ -168,8 +174,18 @@
                             [NSColor whiteColor], NSForegroundColorAttributeName, 
                             [NSFont fontWithName:@"Futura-Normal" size:14], NSFontAttributeName, 
                             nil] autorelease];
-
-  [row.label setAttributedStringValue: [[[NSAttributedString alloc] initWithString:file attributes: attribs] autorelease]];
+  
+  NSString *title = file;
+  if ([file length] > LABEL_MAX_LENGTH) {
+    NSLog(@"Shortening %@", file);
+    NSMutableString *str = [NSMutableString stringWithString:file];
+    [str replaceCharactersInRange: NSMakeRange(LABEL_MAX_LENGTH - 3, [str length] - LABEL_MAX_LENGTH) 
+                        withString: @"..."];
+    title = str;
+  }
+  
+  
+  [row.label setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];
   [row setHidden:NO];
 }
 
@@ -331,6 +347,22 @@
             blue:	(float)blueByte	/ 0xff
             alpha:0.3];
   return result;
+}
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+  [self holdWindow];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+  [self releaseWindow];
+}
+
+- (void) holdWindow {
+  holdingWindow = YES;
+}
+
+- (void) releaseWindow {
+  holdingWindow = NO;
 }
 
 @end

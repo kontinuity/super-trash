@@ -23,7 +23,8 @@
   IBOutlet NSTextField *others;
   IBOutlet NSTextField *counter;
   
-  int seconds;
+  int secondsSinceWindowOpen;
+  BOOL holdingWindow;
 }
 
 @property (retain) NSString *trashDirectory;
@@ -32,12 +33,13 @@
 @property (retain) NSMutableArray *notifiedTrashedFiles;
 @property (retain) NSTimer *timer;
 @property (retain) NSMutableArray *rows;
-@property (assign) int seconds;
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification;
 - (void) registerEvents;
 - (void) scanTrash;
-- (void) startTicker;
+- (void) startTimerInBackgroundThread;
+- (void) startTimer;
+- (void) timerFiredInBackgroundThread;
 - (void) initializePaths;
 - (void) initializeWindow;
 - (void) initializeRows;
@@ -58,5 +60,9 @@
 - (void) setOthersTitle: (NSString *) title;
 - (void) setCounterTitle: (NSString *) title;
 - (NSColor *) colorFromHexRGB:(NSString *) inColorString;
+- (void) mouseEntered:(NSEvent *)theEvent;
+- (void) mouseExited:(NSEvent *)theEvent;
+- (void) holdWindow;
+- (void) releaseWindow;
 
 @end

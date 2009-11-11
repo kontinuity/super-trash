@@ -26,14 +26,18 @@
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {
-  NSLog(@"Mouse entered");
+  [[[NSApplication sharedApplication] delegate] mouseEntered:theEvent];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+  [[[NSApplication sharedApplication] delegate] mouseExited:theEvent];
 }
 
 - (void)updateTrackingAreas {
   [self removeTrackingArea:trackingArea];
   [trackingArea release];
   trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame]
-                                              options: (NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow)
+                                              options: (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways)
                                               owner:self userInfo:nil];
   [self addTrackingArea:trackingArea];
 }
