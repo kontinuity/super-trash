@@ -15,7 +15,8 @@
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
-  [self registerDefaults];  
+  [self registerDefaults];
+  [self initializeObjects];
   [self initializePaths];
   [self initializeWindow];
   [self initializeRows];
@@ -23,10 +24,13 @@
   [self registerEvents];
   [self startTimer];
   
-  [self showNotification: [NSArray arrayWithObjects: @"bse.py", @"Lorem big text", @"ipsum jumped", @"dolor over the", 
-                           @"sit rainbow while", @"amet drinking a glass", @"consectetur of whisky on", @"adipisicing the rocks", @"elit and got drunk", nil]];
-  
+  NSString *str = [NSString stringWithFormat:@"Application loaded\nFound %i items in trash", [trashContents count]];
+  [self showMessage:str];
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
+}
+
+- (void) initializeObjects {
+  self.notifiedTrashedFiles = [NSMutableArray array];
 }
 
 - (void) startTimer {
@@ -122,6 +126,7 @@
 - (void) showNotification:(NSArray *) trashedFiles {
   
   [self hideAllRows];
+  [self showAll];
   
   if ([trashedFiles count] == 0) {
     [self hideNotification];
@@ -136,6 +141,7 @@
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
   [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];  
   [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
+  [info setFrameOrigin:NSMakePoint(10, 10)];
     
   for (int index = 0; index < rowsToDisplay; index++) {
     [self update: [self.rows objectAtIndex:index] with:[trashedFiles objectAtIndex:index]];
@@ -147,9 +153,7 @@
     NSString *title = [NSString stringWithFormat:@"and %i others", displayCount];
     [self setOthersTitle: title];
     [others setHidden:NO];
-  }  
-    
-  self.notifiedTrashedFiles = [[NSMutableArray alloc] initWithArray: trashedFiles];
+  }
   
   [[NSAnimationContext currentContext] setDuration:0.5f];
   [[notificationWindow animator] setAlphaValue:1.0];
@@ -158,9 +162,37 @@
 }
 
 - (void) hideNotification {
-  [[NSAnimationContext currentContext] setDuration:0.5f];
-  [[notificationWindow animator] setAlphaValue:0.0];  
   
+  [notifiedTrashedFiles removeAllObjects];
+  
+  [[NSAnimationContext currentContext] setDuration:0.5f];
+  [[notificationWindow animator] setAlphaValue:0.0];
+}
+
+- (void) showMessage: (NSString *) title {
+  
+  [self hideAll];
+  
+  NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSColor whiteColor], NSForegroundColorAttributeName,
+                            [NSFont fontWithName:@"Futura-Normal" size:18], NSFontAttributeName,
+                            nil] autorelease];
+  
+  [message setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];  
+  [message sizeToFit];
+  
+  NSRect windowFrame = [notificationWindow frame];
+  NSRect messageFrame = [message frame];
+  
+  [message setFrameOrigin:NSMakePoint((windowFrame.size.width - messageFrame.size.width) / 2, 
+                                      (windowFrame.size.height - messageFrame.size.height) / 2)];
+  
+  [self setWindowSize: NSMakeSize(WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT)];
+  
+  [info setFrameOrigin:NSMakePoint(10, 10)];
+  
+  [[NSAnimationContext currentContext] setDuration:0.5f];
+  [[notificationWindow animator] setAlphaValue:1.0];
 }
 
 - (void) update: (NotificationRowView *) row with: (NSString *) file {
@@ -169,20 +201,40 @@
 
   NSDictionary *attribs = [[[NSDictionary alloc] initWithObjectsAndKeys: 
                             [NSColor whiteColor], NSForegroundColorAttributeName, 
-                            [NSFont fontWithName:@"Futura-Normal" size:14], NSFontAttributeName, 
+                            [NSFont fontWithName:@"Futura-Normal" size:13], NSFontAttributeName, 
                             nil] autorelease];
   
   NSString *title = file;
   if ([file length] > LABEL_MAX_LENGTH) {
     NSMutableString *str = [NSMutableString stringWithString:file];
-    [str replaceCharactersInRange: NSMakeRange(LABEL_MAX_LENGTH - 3, [str length] - LABEL_MAX_LENGTH) 
+    int start = floor((LABEL_MAX_LENGTH - 3) * 0.75);
+    int length = [str length] - LABEL_MAX_LENGTH + 3;
+    [str replaceCharactersInRange: NSMakeRange(start, length)
                         withString: @"..."];
-    title = str;
+    title = str;    
   }
   
-  
   [row.label setAttributedStringValue: [[[NSAttributedString alloc] initWithString:title attributes: attribs] autorelease]];
+  [row.label sizeToFit];
   [row setHidden:NO];
+}
+
+- (void) showAll {
+  [others setHidden:NO];
+  [counter setHidden:NO];
+  [deleteAll setHidden:NO];
+  [close setHidden:NO];
+  
+  [message setHidden:YES];
+}
+
+- (void) hideAll {
+  [others setHidden:YES];
+  [counter setHidden:YES];
+  [deleteAll setHidden:YES];
+  [close setHidden:YES];
+  [self hideAllRows];
+  [message setHidden:NO];
 }
 
 - (void) hideAllRows {
@@ -205,7 +257,7 @@
   NSTextField *label = [self createLabelWith:file];
   [row addSubview:label];
   row.label = label;
-  [label setFrame: NSMakeRect(44, 0, 120, 16)];  
+  [label setFrame: NSMakeRect(40, 0, 120, 16)];  
   
   NSButton *button = [self createButtonWith:file];
   [row addSubview:button];
@@ -261,16 +313,19 @@
   
   NSMutableArray *trashedFiles = [NSMutableArray array];
   for (NSString *file in trashState) {
-    if ([self.trashContents indexOfObject:file] == NSNotFound) {
+    if ([self.trashContents indexOfObject:file] == NSNotFound && [self.notifiedTrashedFiles indexOfObject:file] == NSNotFound) {
       [trashedFiles addObject:file];
     }
   }
   NSLog(@"Found total %d changed files", [trashedFiles count]);
-  self.trashContents = [NSArray arrayWithArray:trashState];
   
-  if ([trashedFiles count]) {
-    [self showNotification:trashedFiles];
+  [notifiedTrashedFiles addObjectsFromArray:trashedFiles];
+  self.trashContents = [NSMutableArray arrayWithArray:trashState];
+  
+  if ([notifiedTrashedFiles count]) {
+    [self showNotification:notifiedTrashedFiles];
   }
+  
 }
 
 - (IBAction) close: (id) sender {
@@ -278,7 +333,9 @@
 }
 
 - (IBAction) show: (id) sender {
-  [self showNotification: [NSArray arrayWithObjects: @"MYDirectoryWatcher.m", @"domain_mapping.php", nil]];
+  NSArray *newFiles = [NSArray arrayWithObjects: @"123456789012345678901234567890", @"domain_mapping.php", nil];
+  [notifiedTrashedFiles addObjectsFromArray:newFiles];
+  [self showNotification: notifiedTrashedFiles];
 }
 
 - (void) remove: (id) sender {
@@ -361,6 +418,11 @@
 
 - (void) releaseWindow {
   holdingWindow = NO;
+}
+
+- (IBAction) openAboutWindow: (id) sender {
+  [NSApp activateIgnoringOtherApps:YES];
+  [about makeKeyAndOrderFront:sender];
 }
 
 @end

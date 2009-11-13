@@ -15,4 +15,4 @@ extern int const MAX_ROWS;
 int const MAX_ROWS = 5;
 
 extern int const LABEL_MAX_LENGTH;
-int const LABEL_MAX_LENGTH = 25;
+int const LABEL_MAX_LENGTH = 20;

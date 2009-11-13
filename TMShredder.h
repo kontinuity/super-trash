@@ -21,6 +21,9 @@
   IBOutlet NSButton *close;
   IBOutlet NSTextField *others;
   IBOutlet NSTextField *counter;
+  IBOutlet NSTextField *message;
+  IBOutlet NSButton *info;
+  IBOutlet NSWindow *about;
   
   int secondsSinceWindowOpen;
   BOOL holdingWindow;
@@ -38,6 +41,7 @@
 - (void) startTimerInBackgroundThread;
 - (void) startTimer;
 - (void) timerFiredInBackgroundThread;
+- (void) initializeObjects;
 - (void) initializePaths;
 - (void) initializeWindow;
 - (void) initializeRows;
@@ -46,8 +50,11 @@
 - (NSArray *) trashSnapshot;
 - (void) showNotification:(NSArray *) trashedFiles;
 - (void) hideNotification;
+- (void) showMessage: (NSString *) title;
 - (NotificationRowView *) drawRowAt: (int) index with: (NSString *) file andHidden: (BOOL) hide;
 - (void) update: (NotificationRowView *) row with: (NSString *) file;
+- (void) showAll;
+- (void) hideAll;
 - (void) hideAllRows;
 - (NSTextField *) createLabelWith: (NSString *) display;
 - (NSButton *) createButtonWith: (NSString *) title;
@@ -63,5 +70,6 @@
 - (void) holdWindow;
 - (void) releaseWindow;
 - (int) displayedFilesCount;
+- (IBAction) openAboutWindow: (id) sender;
 
 @end
