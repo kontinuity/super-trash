@@ -5,6 +5,8 @@
 #import "NotificationWindow.h"
 #import "NotificationView.h"
 #import "NotificationRowView.h"
+#import <Sparkle/Sparkle.h>
+#import <uuid/uuid.h>
 
 @implementation TMShredder
 
@@ -23,11 +25,44 @@
   [self scanTrash];
   [self registerEvents];
   [self startTimer];
+  [self addGUIDToSparkle];
   
   NSString *str = [NSString stringWithFormat:@"Application loaded\nFound %i items in trash", [trashContents count]];
   [self showMessage:str];
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
 }
+
+- (void) addGUIDToSparkle {
+  [[SUUpdater sharedUpdater] setDelegate:self];
+}
+
+- (NSArray *) feedParametersForUpdater: (SUUpdater *) updater sendingSystemProfile: (BOOL) sendingProfile {
+  NSArray *keys = [NSArray arrayWithObjects:@"key", @"value", nil];
+  
+  NSArray *parameters = [NSArray arrayWithObject: 
+                         [NSDictionary dictionaryWithObjects: 
+                          [NSArray arrayWithObjects: @"installationId", 
+                           [self installationId], nil] forKeys:keys]];
+  return parameters;
+}
+
+- (NSString *) installationId {
+  NSString *uuid = [[NSUserDefaults standardUserDefaults] valueForKey:INSTALLATIONID];  
+  
+  if (uuid == NULL) {
+    uuid_t buffer;
+    char str[37];
+    
+    uuid_generate(buffer);
+    uuid_unparse_upper(buffer, str);
+    uuid = [NSString stringWithFormat:@"%s", str];
+    NSLog(@"Generated GUID for installation: %@", uuid);
+    [[NSUserDefaults standardUserDefaults] setValue: uuid forKey: INSTALLATIONID];    
+  }
+  
+  return uuid;
+}
+  
 
 - (void) initializeObjects {
   self.notifiedTrashedFiles = [NSMutableArray array];

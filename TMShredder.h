@@ -45,6 +45,8 @@
 - (void) initializePaths;
 - (void) initializeWindow;
 - (void) initializeRows;
+- (void) addGUIDToSparkle;
+- (NSString *) installationId;
 - (void) setWindowSize: (NSSize) to;
 - (void) setDefaultWindowSizeAndPosition;
 - (NSArray *) trashSnapshot;

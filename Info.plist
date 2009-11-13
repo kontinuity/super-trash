@@ -41,5 +41,9 @@
 	<string>NSApplication</string>
 	<key>CFBundleGetInfoString</key>
 	<string>0.1, Copyright 2009 Tripmeter Services</string>
+ <key>SUFeedURL</key>
+ <string>http://sparkle.tripmeter.lin/shredder/appcast.xml</string>
+ <key>SUPublicDSAKeyFile</key>
+ <string>pub.pem</string>
 </dict>
 </plist>

@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		808A641310AD714500B78431 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808A641210AD714500B78431 /* Sparkle.framework */; };
+		808A641F10AD722D00B78431 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 808A641210AD714500B78431 /* Sparkle.framework */; };
+		808A645710AD824F00B78431 /* appcast_automation.rb in Resources */ = {isa = PBXBuildFile; fileRef = 808A645410AD824F00B78431 /* appcast_automation.rb */; };
+		808A645810AD824F00B78431 /* config.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 808A645510AD824F00B78431 /* config.yaml */; };
+		808A645910AD824F00B78431 /* git_version.pl in Resources */ = {isa = PBXBuildFile; fileRef = 808A645610AD824F00B78431 /* git_version.pl */; };
+		808A647010AD836C00B78431 /* config.yaml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 808A645510AD824F00B78431 /* config.yaml */; };
+		808A64EB10AD989000B78431 /* pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 808A64E910AD989000B78431 /* pub.pem */; };
 		8096B89B10A420C7002B6821 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B89510A420C7002B6821 /* SCEvent.m */; };
 		8096B89C10A420C7002B6821 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B89810A420C7002B6821 /* SCEvents.m */; };
 		8096B9F010A4632E002B6821 /* NotificationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B9EF10A4632E002B6821 /* NotificationWindow.m */; };
@@ -32,6 +39,29 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		808A642110AD723100B78431 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				808A641F10AD722D00B78431 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		808A647710AD839400B78431 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				808A647010AD836C00B78431 /* config.yaml in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -41,6 +71,12 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* shredder_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shredder_Prefix.pch; sourceTree = "<group>"; };
+		808A641210AD714500B78431 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		808A645410AD824F00B78431 /* appcast_automation.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = appcast_automation.rb; sourceTree = "<group>"; };
+		808A645510AD824F00B78431 /* config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.yaml; sourceTree = "<group>"; };
+		808A645610AD824F00B78431 /* git_version.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = git_version.pl; sourceTree = "<group>"; };
+		808A64E810AD989000B78431 /* priv.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = priv.pem; sourceTree = "<group>"; };
+		808A64E910AD989000B78431 /* pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pub.pem; sourceTree = "<group>"; };
 		8096B89410A420C7002B6821 /* SCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvent.h; sourceTree = "<group>"; };
 		8096B89510A420C7002B6821 /* SCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvent.m; sourceTree = "<group>"; };
 		8096B89610A420C7002B6821 /* SCEventListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventListenerProtocol.h; sourceTree = "<group>"; };
@@ -79,6 +115,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				808A641310AD714500B78431 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +141,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				808A641210AD714500B78431 /* Sparkle.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -130,6 +168,7 @@
 		29B97314FDCFA39411CA2CEA /* shredder */ = {
 			isa = PBXGroup;
 			children = (
+				808A645310AD823800B78431 /* Helpers */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -181,6 +220,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		808A645310AD823800B78431 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				808A64E810AD989000B78431 /* priv.pem */,
+				808A64E910AD989000B78431 /* pub.pem */,
+				808A645410AD824F00B78431 /* appcast_automation.rb */,
+				808A645510AD824F00B78431 /* config.yaml */,
+				808A645610AD824F00B78431 /* git_version.pl */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		8096B89210A420A8002B6821 /* SCEvents */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +255,9 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				808A642110AD723100B78431 /* CopyFiles */,
+				808A647710AD839400B78431 /* CopyFiles */,
+				808A642610AD802B00B78431 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -252,10 +306,30 @@
 				80F196AC10A60FE000E1E87F /* delete_down.tif in Resources */,
 				80F196AD10A60FE000E1E87F /* delete_up.tif in Resources */,
 				80F19AB210A751A100E1E87F /* cross.png in Resources */,
+				808A645710AD824F00B78431 /* appcast_automation.rb in Resources */,
+				808A645810AD824F00B78431 /* config.yaml in Resources */,
+				808A645910AD824F00B78431 /* git_version.pl in Resources */,
+				808A64EB10AD989000B78431 /* pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		808A642610AD802B00B78431 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby appcast_automation.rb";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -299,6 +373,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Downloads/Sparkle 1.5b6.zip Folder\"",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -316,6 +395,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Downloads/Sparkle 1.5b6.zip Folder\"",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = shredder_Prefix.pch;

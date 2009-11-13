@@ -16,3 +16,6 @@ int const MAX_ROWS = 5;
 
 extern int const LABEL_MAX_LENGTH;
 int const LABEL_MAX_LENGTH = 20;
+
+extern NSString * const INSTALLATIONID;
+NSString * const INSTALLATIONID = @"installationid";
