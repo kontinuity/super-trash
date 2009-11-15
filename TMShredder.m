@@ -62,7 +62,6 @@
   
   return uuid;
 }
-  
 
 - (void) initializeObjects {
   self.notifiedTrashedFiles = [NSMutableArray array];
@@ -86,6 +85,8 @@
 }
 
 - (void) timerFired {
+  
+  [counter setHidden:holdingWindow];
   
   if (holdingWindow)
     return;
