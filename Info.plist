@@ -24,7 +24,7 @@
 	<key>CFBundleIconFile</key>
 	<string>APPL.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>in.tripmeter.Shredder</string>
+	<string>in.tripmeter.SuperTrash</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -41,9 +41,11 @@
 	<string>NSApplication</string>
 	<key>CFBundleGetInfoString</key>
 	<string>0.1, Copyright 2009 Tripmeter Services</string>
- <key>SUFeedURL</key>
- <string>http://sparkle.tripmeter.lin/shredder/appcast.xml</string>
- <key>SUPublicDSAKeyFile</key>
- <string>pub.pem</string>
+	<key>SUFeedURL</key>
+	<string>http://sparkle.tripmeter.lin/supertrash/</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>pub.pem</string>
+	<key>TMBuildDate</key>
+	<string>$TM_BUILD_DATE</string>
 </dict>
 </plist>

@@ -26,10 +26,19 @@
   [self registerEvents];
   [self startTimer];
   [self addGUIDToSparkle];
+  [self playNiceWithSpaces];
   
   NSString *str = [NSString stringWithFormat:@"Application loaded\nFound %i items in trash", [trashContents count]];
   [self showMessage:str];
   NSLog(@"[%@] Application loaded successfully", [NSThread  currentThread]);
+}
+
+- (void) playNiceWithSpaces {
+  if ([notificationWindow respondsToSelector:@selector(setCollectionBehavior:)]) {
+    [notificationWindow setCollectionBehavior:NSWindowCollectionBehaviorMoveToActiveSpace];
+    [about setCollectionBehavior:NSWindowCollectionBehaviorMoveToActiveSpace];
+  }
+  
 }
 
 - (void) addGUIDToSparkle {
@@ -56,7 +65,6 @@
     uuid_generate(buffer);
     uuid_unparse_upper(buffer, str);
     uuid = [NSString stringWithFormat:@"%s", str];
-    NSLog(@"Generated GUID for installation: %@", uuid);
     [[NSUserDefaults standardUserDefaults] setValue: uuid forKey: INSTALLATIONID];    
   }
   
@@ -114,8 +122,7 @@
 }
 
 - (void) initializePaths {
-  self.trashDirectory = [NSHomeDirectory() stringByAppendingString:@"/temp/shredder/"];
-  NSLog(@"Done initializing trash locations. Location set to: %@", self.trashDirectory);
+  self.trashDirectory = [NSHomeDirectory() stringByAppendingString:@"/.Trash/"];
 }
 
 - (void) initializeWindow {
@@ -353,7 +360,6 @@
       [trashedFiles addObject:file];
     }
   }
-  NSLog(@"Found total %d changed files", [trashedFiles count]);
   
   [notifiedTrashedFiles addObjectsFromArray:trashedFiles];
   self.trashContents = [NSMutableArray arrayWithArray:trashState];
@@ -374,16 +380,26 @@
   [self showNotification: notifiedTrashedFiles];
 }
 
+- (BOOL) deleteFileWith: (NSString *) fullPath {
+  return [[NSFileManager defaultManager] removeItemAtPath:fullPath error:NULL];
+}
+
 - (void) remove: (id) sender {
   
   NotificationRowView *row = (NotificationRowView *) [sender superview];
   int fileIndex = [self.rows indexOfObject:row];
-  [self.notifiedTrashedFiles removeObjectAtIndex:fileIndex];
-  [self showNotification:self.notifiedTrashedFiles];
+  [self deleteFileWith: [self.notifiedTrashedFiles objectAtIndex:fileIndex]];
   
+  [self.notifiedTrashedFiles removeObjectAtIndex:fileIndex];
+  [self showNotification:self.notifiedTrashedFiles];  
 }
 
 - (IBAction) removeAll: (id) sender {
+    
+  for (NSString *filePath in self.notifiedTrashedFiles) {
+    [self deleteFileWith:filePath];
+  }
+    
   [self.notifiedTrashedFiles removeAllObjects];
   [self hideNotification];
 }
@@ -459,6 +475,17 @@
 - (IBAction) openAboutWindow: (id) sender {
   [NSApp activateIgnoringOtherApps:YES];
   [about makeKeyAndOrderFront:sender];
+}
+  
+- (NSString *) displayVersion {
+  NSBundle *bundle = [NSBundle bundleWithIdentifier:@"in.tripmeter.SuperTrash"];
+  return [NSString stringWithFormat:@"v%@", [[bundle infoDictionary] objectForKey:@"CFBundleVersion"]];
+}
+  
+- (NSString *) buildDate {
+  NSBundle *bundle = [NSBundle bundleWithIdentifier:@"in.tripmeter.SuperTrash"];
+  NSLog([NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]]);
+  return [NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]];    
 }
 
 @end

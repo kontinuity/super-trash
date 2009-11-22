@@ -41,6 +41,7 @@
 - (void) startTimerInBackgroundThread;
 - (void) startTimer;
 - (void) timerFiredInBackgroundThread;
+- (void) playNiceWithSpaces;
 - (void) initializeObjects;
 - (void) initializePaths;
 - (void) initializeWindow;
@@ -72,6 +73,7 @@
 - (void) holdWindow;
 - (void) releaseWindow;
 - (int) displayedFilesCount;
+- (BOOL) deleteFileWith: (NSString *) fullPath;
 - (IBAction) openAboutWindow: (id) sender;
 
 @end
