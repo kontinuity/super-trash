@@ -27,7 +27,7 @@ on process_disk_image(volumeName, artPath)
 			--set position of item "Growl version history.webloc" to {275, 218}
 			--set position of item "Get more styles.webloc" to {415, 218}
 			--set position of item "Uninstall Growl.app" to {415, 320}			
-			set position of item "shredder.app" to {145, 230}
+			set position of item "SuperTrash.app" to {145, 230}
 			set position of item "Applications" to {360, 230}
 			
 			-- Custom icons

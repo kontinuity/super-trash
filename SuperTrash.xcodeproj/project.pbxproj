@@ -21,7 +21,7 @@
 		8096B9F010A4632E002B6821 /* NotificationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096B9EF10A4632E002B6821 /* NotificationWindow.m */; };
 		8096BA0510A464EE002B6821 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8096BA0410A464EE002B6821 /* NotificationView.m */; };
 		80A513D610A2FBE60009BAF4 /* APPL.icns in Resources */ = {isa = PBXBuildFile; fileRef = 80A513D510A2FBE60009BAF4 /* APPL.icns */; };
-		80A513DB10A2FD650009BAF4 /* TMShredder.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A513DA10A2FD650009BAF4 /* TMShredder.m */; };
+		80A513DB10A2FD650009BAF4 /* SuperTrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A513DA10A2FD650009BAF4 /* SuperTrash.m */; };
 		80F1942410A46B1A00E1E87F /* notification_window_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F1942210A46B1A00E1E87F /* notification_window_bg.png */; };
 		80F1943310A46D7C00E1E87F /* bg.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F1943210A46D7C00E1E87F /* bg.tif */; };
 		80F1951310A47D5800E1E87F /* confirm_btn_down.tif in Resources */ = {isa = PBXBuildFile; fileRef = 80F1951110A47D5800E1E87F /* confirm_btn_down.tif */; };
@@ -90,8 +90,8 @@
 		8096BA0310A464EE002B6821 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		8096BA0410A464EE002B6821 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
 		80A513D510A2FBE60009BAF4 /* APPL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = APPL.icns; sourceTree = "<group>"; };
-		80A513D910A2FD650009BAF4 /* TMShredder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMShredder.h; sourceTree = "<group>"; };
-		80A513DA10A2FD650009BAF4 /* TMShredder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMShredder.m; sourceTree = "<group>"; };
+		80A513D910A2FD650009BAF4 /* SuperTrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperTrash.h; sourceTree = "<group>"; };
+		80A513DA10A2FD650009BAF4 /* SuperTrash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperTrash.m; sourceTree = "<group>"; };
 		80F1942210A46B1A00E1E87F /* notification_window_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notification_window_bg.png; sourceTree = "<group>"; };
 		80F1943210A46D7C00E1E87F /* bg.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = bg.tif; sourceTree = "<group>"; };
 		80F1951110A47D5800E1E87F /* confirm_btn_down.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = confirm_btn_down.tif; sourceTree = "<group>"; };
@@ -127,8 +127,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				80A513D910A2FD650009BAF4 /* TMShredder.h */,
-				80A513DA10A2FD650009BAF4 /* TMShredder.m */,
+				80A513D910A2FD650009BAF4 /* SuperTrash.h */,
+				80A513DA10A2FD650009BAF4 /* SuperTrash.m */,
 				8096B9EE10A4632E002B6821 /* NotificationWindow.h */,
 				8096B9EF10A4632E002B6821 /* NotificationWindow.m */,
 				8096BA0310A464EE002B6821 /* NotificationView.h */,
@@ -167,7 +167,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* shredder */ = {
+		29B97314FDCFA39411CA2CEA /* SuperTrash */ = {
 			isa = PBXGroup;
 			children = (
 				808A645310AD823800B78431 /* Helpers */,
@@ -178,7 +178,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
-			name = shredder;
+			name = SuperTrash;
 			sourceTree = "<group>";
 		};
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
@@ -267,7 +267,7 @@
 			);
 			name = SuperTrash;
 			productInstallPath = "$(HOME)/Applications";
-			productName = shredder;
+			productName = SuperTrash;
 			productReference = 8D1107320486CEB800E47090 /* SuperTrash.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -279,7 +279,7 @@
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SuperTrash" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
-			mainGroup = 29B97314FDCFA39411CA2CEA /* shredder */;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* SuperTrash */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -324,7 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				80A513DB10A2FD650009BAF4 /* TMShredder.m in Sources */,
+				80A513DB10A2FD650009BAF4 /* SuperTrash.m in Sources */,
 				8096B89B10A420C7002B6821 /* SCEvent.m in Sources */,
 				8096B89C10A420C7002B6821 /* SCEvents.m in Sources */,
 				8096B9F010A4632E002B6821 /* NotificationWindow.m in Sources */,

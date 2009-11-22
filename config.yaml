@@ -1,5 +1,5 @@
 build_now:              'YES'
-download_base_url:      'http://sparkle.tripmeter.lin/shredder/'
+download_base_url:      'http://sparkle.tripmeter.lin/SuperTrash/'
 appcast_basefolder:     '/Users/arif/work/sparkle/releases/'
 appcast_xml_name:       'appcast.xml'
 keychain_privkey_name:  'sparkle_dsa_private_key'

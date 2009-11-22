@@ -5,7 +5,7 @@ use strict;
  
 # Get the current git commit hash and use it to set the CFBundleVersion value
 my $REV = `git show --abbrev-commit | grep "^commit"`;
-my $INFO = "build/Debug/shredder.app/Contents/Info.plist";
+my $INFO = "build/Debug/SuperTrash.app/Contents/Info.plist";
  
 my $version = $REV;
 if( $version =~ /^commit\s+([^.]+)\.\.\.$/ )
