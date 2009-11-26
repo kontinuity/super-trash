@@ -19,3 +19,9 @@ int const LABEL_MAX_LENGTH = 20;
 
 extern NSString * const INSTALLATIONID;
 NSString * const INSTALLATIONID = @"installationid";
+
+extern NSString * const PREF_WINDOW_DISPLAY_DURATION;
+NSString * const PREF_WINDOW_DISPLAY_DURATION = @"windowDisplayDuration";
+
+extern NSString * const PREF_FAKE_DELETE;
+NSString * const PREF_FAKE_DELETE = @"fakeDelete";

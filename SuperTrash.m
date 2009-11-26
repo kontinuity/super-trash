@@ -13,7 +13,11 @@
 @synthesize trashDirectory, trashContents, notificationWindowLocation, notifiedTrashedFiles, rows;
 
 - (void) registerDefaults {
-  [[NSUserDefaults standardUserDefaults] setInteger:5 forKey:@"windowDisplayDuration"];
+  NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithInt:5], PREF_WINDOW_DISPLAY_DURATION,
+                            [NSNumber numberWithInt:1], PREF_FAKE_DELETE,
+                            nil];
+  [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void) applicationDidFinishLaunching:(NSNotification *) aNotification {
@@ -179,10 +183,10 @@
   int rowsToDisplay = MIN(MAX_ROWS, [trashedFiles count]);
   
   //42 + (rows * (66 + 4)) - DELETE ALL + (rows * (ROW HEIGHT + PAD))
-  NSSize calculatedWindowSize = NSMakeSize(WINDOW_DEFAULT_WIDTH, 60 + (rowsToDisplay * (30 + 4)));
+  NSSize calculatedWindowSize = NSMakeSize(WINDOW_DEFAULT_WIDTH, 60 + (rowsToDisplay * (20 + 4) + 10));
   [self setWindowSize: calculatedWindowSize];
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
-  [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];  
+  [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];
   [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
   [info setFrameOrigin:NSMakePoint(10, 10)];
     
@@ -264,7 +268,7 @@
 
 - (void) showAll {
   [others setHidden:NO];
-  [counter setHidden:NO];
+  [counter setHidden:YES];
   [deleteAll setHidden:NO];
   [close setHidden:NO];
   
@@ -288,7 +292,7 @@
 
 - (NotificationRowView *) drawRowAt: (int) index with: (NSString *) file andHidden: (BOOL) hide  {
   
-  int rowY = 60 + index * 24;
+  int rowY = 60 + (index * 24);
   
   NotificationRowView *row = [[[NotificationRowView alloc] initWithFrame: NSMakeRect(0, 0, 0, 0)] autorelease];
   
@@ -375,12 +379,17 @@
 }
 
 - (IBAction) show: (id) sender {
-  NSArray *newFiles = [NSArray arrayWithObjects: @"123456789012345678901234567890", @"domain_mapping.php", nil];
+  NSArray *newFiles = [NSArray arrayWithObjects: @"domain_mapping.php", nil];
   [notifiedTrashedFiles addObjectsFromArray:newFiles];
   [self showNotification: notifiedTrashedFiles];
 }
 
 - (BOOL) deleteFileWith: (NSString *) fullPath {
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:PREF_FAKE_DELETE]) {
+    NSLog(@"Faked delete operation");
+    return YES;
+  }
+  
   return [[NSFileManager defaultManager] removeItemAtPath:fullPath error:NULL];
 }
 
@@ -391,7 +400,7 @@
   [self deleteFileWith: [self.trashDirectory stringByAppendingString:[self.notifiedTrashedFiles objectAtIndex:fileIndex]]];
   
   [self.notifiedTrashedFiles removeObjectAtIndex:fileIndex];
-  [self showNotification:self.notifiedTrashedFiles];  
+  [self showNotification:self.notifiedTrashedFiles];
 }
 
 - (IBAction) removeAll: (id) sender {
@@ -429,6 +438,7 @@
   NSRect deleteAllFrame = [deleteAll frame];
   [counter sizeToFit];
   [counter setFrameOrigin:NSMakePoint(110, deleteAllFrame.origin.y + deleteAllFrame.size.height + 5)];
+  [counter setHidden:YES];
 }
 
 - (int) displayedFilesCount {
