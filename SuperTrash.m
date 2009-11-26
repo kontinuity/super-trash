@@ -388,7 +388,7 @@
   
   NotificationRowView *row = (NotificationRowView *) [sender superview];
   int fileIndex = [self.rows indexOfObject:row];
-  [self deleteFileWith: [self.notifiedTrashedFiles objectAtIndex:fileIndex]];
+  [self deleteFileWith: [self.trashDirectory stringByAppendingString:[self.notifiedTrashedFiles objectAtIndex:fileIndex]]];
   
   [self.notifiedTrashedFiles removeObjectAtIndex:fileIndex];
   [self showNotification:self.notifiedTrashedFiles];  
@@ -397,7 +397,7 @@
 - (IBAction) removeAll: (id) sender {
     
   for (NSString *filePath in self.notifiedTrashedFiles) {
-    [self deleteFileWith:filePath];
+    [self deleteFileWith: [self.trashDirectory stringByAppendingString:filePath]];
   }
     
   [self.notifiedTrashedFiles removeAllObjects];
