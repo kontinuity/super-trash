@@ -25,3 +25,6 @@ NSString * const PREF_WINDOW_DISPLAY_DURATION = @"windowDisplayDuration";
 
 extern NSString * const PREF_FAKE_DELETE;
 NSString * const PREF_FAKE_DELETE = @"fakeDelete";
+
+extern NSString * const DEFAULT_BUNDLE_IDENTIFIER;
+NSString * const DEFAULT_BUNDLE_IDENTIFIER = @"in.aptly.SuperTrash";

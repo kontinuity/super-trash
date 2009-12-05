@@ -24,7 +24,7 @@
 	<key>CFBundleIconFile</key>
 	<string>APPL.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>in.tripmeter.SuperTrash</string>
+	<string>in.aptly.SuperTrash</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -40,9 +40,9 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>CFBundleGetInfoString</key>
-	<string>0.1, Copyright 2009 Tripmeter Services</string>
+	<string>0.1, Copyright 2009 Aptly Labs</string>
 	<key>SUFeedURL</key>
-	<string>http://sparkle.tripmeter.lin/supertrash/</string>
+	<string>http://sparkle.aptly.in/supertrash/</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>pub.pem</string>
 	<key>TMBuildDate</key>

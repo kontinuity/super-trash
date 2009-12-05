@@ -25,7 +25,7 @@
   IBOutlet NSButton *info;
   IBOutlet NSWindow *about;
   
-  int secondsSinceWindowOpen;
+  float secondsSinceWindowOpen;
   BOOL holdingWindow;
 }
 

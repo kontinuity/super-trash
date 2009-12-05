@@ -85,7 +85,7 @@
   
 - (void) startTimerInBackgroundThread {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  NSTimer *localTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFiredInBackgroundThread) userInfo:NULL repeats:YES];
+  NSTimer *localTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timerFiredInBackgroundThread) userInfo:NULL repeats:YES];
   [[NSRunLoop currentRunLoop] addTimer:[localTimer retain] forMode:NSDefaultRunLoopMode];
   [self timerFiredInBackgroundThread];
   [[NSRunLoop currentRunLoop] run];
@@ -98,18 +98,16 @@
 
 - (void) timerFired {
   
-  [counter setHidden:holdingWindow];
+  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: PREF_WINDOW_DISPLAY_DURATION];
   
-  if (holdingWindow)
-    return;
-  
-  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: @"windowDisplayDuration"];
   if (secondsSinceWindowOpen >= duration) {
     [self hideNotification];
-  } else {
+  } else {    
     [self updateCounter];
-    secondsSinceWindowOpen++;
-  }  
+    if (!holdingWindow)
+      secondsSinceWindowOpen += 0.1f;
+  }
+  
 }
 
 - (void) scanTrash {
@@ -151,9 +149,9 @@
     
   /* 
    * Default Location is bottom right of screen cause its closest to the 
-   * trash can where the users mouse will be
+   * trash can where the user's mouse will be
    */
-  return NSMakePoint(screenSize.width - size.width - WINDOW_RIGHT_PAD, MAX(screenSize.height / 4, size.height + WINDOW_BOTTOM_PAD));
+  return NSMakePoint(screenSize.width - size.width - WINDOW_RIGHT_PAD, size.height + WINDOW_BOTTOM_PAD);
 }
 
 - (void) setDefaultWindowSizeAndPosition {
@@ -186,9 +184,9 @@
   NSSize calculatedWindowSize = NSMakeSize(WINDOW_DEFAULT_WIDTH, 60 + (rowsToDisplay * (20 + 4) + 10));
   [self setWindowSize: calculatedWindowSize];
   [deleteAll setFrameOrigin:NSMakePoint(77, 4)];
-  [close setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];
+  [info setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 30, 16)];
   [others setFrameOrigin:NSMakePoint(WINDOW_DEFAULT_WIDTH - 80, 40)];
-  [info setFrameOrigin:NSMakePoint(10, 10)];
+  [close setFrameOrigin:NSMakePoint(16, 16)];
     
   for (int index = 0; index < rowsToDisplay; index++) {
     [self update: [self.rows objectAtIndex:index] with:[trashedFiles objectAtIndex:index]];
@@ -202,18 +200,14 @@
     [others setHidden:NO];
   }
   
-  [[NSAnimationContext currentContext] setDuration:0.5f];
-  [[notificationWindow animator] setAlphaValue:1.0];
+  [notificationWindow makeKeyAndOrderFront:self];
   secondsSinceWindowOpen = 0;
   [self updateCounter];
 }
 
-- (void) hideNotification {
-  
+- (void) hideNotification {  
   [notifiedTrashedFiles removeAllObjects];
-  
-  [[NSAnimationContext currentContext] setDuration:0.5f];
-  [[notificationWindow animator] setAlphaValue:0.0];
+  [notificationWindow close];
 }
 
 - (void) showMessage: (NSString *) title {
@@ -237,9 +231,7 @@
   [self setWindowSize: NSMakeSize(WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT)];
   
   [info setFrameOrigin:NSMakePoint(10, 10)];
-  
-  [[NSAnimationContext currentContext] setDuration:0.5f];
-  [[notificationWindow animator] setAlphaValue:1.0];
+  [notificationWindow makeKeyAndOrderFront:self];
 }
 
 - (void) update: (NotificationRowView *) row with: (NSString *) file {
@@ -432,13 +424,23 @@
                             [NSFont fontWithName:@"Helvetica Bold" size:fontSize], NSFontAttributeName,
                             nil] autorelease];
   
-  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: @"windowDisplayDuration"];
+  int duration = [[NSUserDefaults standardUserDefaults] integerForKey: PREF_WINDOW_DISPLAY_DURATION];
   [counter setAttributedStringValue: [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%i", duration - secondsSinceWindowOpen] attributes: attribs] autorelease]];
   
   NSRect deleteAllFrame = [deleteAll frame];
   [counter sizeToFit];
   [counter setFrameOrigin:NSMakePoint(110, deleteAllFrame.origin.y + deleteAllFrame.size.height + 5)];
   [counter setHidden:YES];
+  
+  /* Alternate counter */
+  float alphaPerSecond = 1.00 / (float) duration;
+  float currentAlpha = (duration - secondsSinceWindowOpen) * alphaPerSecond;
+  
+  if (holdingWindow)
+    currentAlpha = 1.00;
+  
+  [[NSAnimationContext currentContext] setDuration:0.1f];
+  [[notificationWindow animator] setAlphaValue:currentAlpha];
 }
 
 - (int) displayedFilesCount {
@@ -488,12 +490,12 @@
 }
   
 - (NSString *) displayVersion {
-  NSBundle *bundle = [NSBundle bundleWithIdentifier:@"in.tripmeter.SuperTrash"];
+  NSBundle *bundle = [NSBundle bundleWithIdentifier:DEFAULT_BUNDLE_IDENTIFIER];
   return [NSString stringWithFormat:@"v%@", [[bundle infoDictionary] objectForKey:@"CFBundleVersion"]];
 }
   
 - (NSString *) buildDate {
-  NSBundle *bundle = [NSBundle bundleWithIdentifier:@"in.tripmeter.SuperTrash"];
+  NSBundle *bundle = [NSBundle bundleWithIdentifier:DEFAULT_BUNDLE_IDENTIFIER];
   NSLog([NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]]);
   return [NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]];    
 }
