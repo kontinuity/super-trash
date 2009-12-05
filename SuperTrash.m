@@ -15,7 +15,7 @@
 - (void) registerDefaults {
   NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
                             [NSNumber numberWithInt:5], PREF_WINDOW_DISPLAY_DURATION,
-                            [NSNumber numberWithInt:1], PREF_FAKE_DELETE,
+                            [NSNumber numberWithInt:0], PREF_FAKE_DELETE,
                             nil];
   [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
@@ -200,7 +200,7 @@
     [others setHidden:NO];
   }
   
-  [notificationWindow makeKeyAndOrderFront:self];
+[notificationWindow makeKeyAndOrderFront:self];
   secondsSinceWindowOpen = 0;
   [self updateCounter];
 }
@@ -496,8 +496,7 @@
   
 - (NSString *) buildDate {
   NSBundle *bundle = [NSBundle bundleWithIdentifier:DEFAULT_BUNDLE_IDENTIFIER];
-  NSLog([NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]]);
-  return [NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]];    
+  return [NSString stringWithFormat:@"Built on %@", [[bundle infoDictionary] objectForKey:@"TMBuildDate"]];
 }
 
 @end
